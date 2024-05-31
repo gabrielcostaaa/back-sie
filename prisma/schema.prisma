@@ -1,0 +1,19 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  user_id String @id @default(cuid()) // ID único para cada usuário, gerado automaticamente com cuid()
+  user_name String
+  user_cpf String @unique // CPF do usuário, deve ser único para garantir a identificação individual
+  user_email String @unique // Email do usuário, deve ser único para evitar duplicação de contas
+  user_createdAt DateTime @default(now())   // Data e hora de criação do registro, padrão é a data e hora atuais
+  user_updatedAt DateTime @updatedAt // Data e hora da última atualização do registro, atualizado automaticamente
+  user_isDeleted Boolean @default(false) // Campo para exclusão lógica, padrão é false (não deletado)
+}
